@@ -1,0 +1,71 @@
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script src="../module/clipboard.js"></script>
+
+<style>
+    .surround {
+        color: white;
+        font-family: Helvetica;
+    }
+    #TITLE {
+        color: rgb(96, 201, 250);
+        font-family: Helvetica;
+        font-weight: bolder;
+    }
+    .child {
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -5px 0 0 -5px;
+        text-align: center;
+        white-space: nowrap;
+    }
+</style>
+
+<body style="background-color: rgb(35, 39, 42);">
+    <!-- <div class="child"> -->
+        <div class="surround" id="one">Click anywhere to copy </div>
+        <div id="TITLE">Get started by adding a Base64 encoded parameter to the URL!</div>
+        <div class="surround" id="two"> to the clipboard!</div>
+        <br>
+        <div class="surround" id="done" style="visibility: hidden;">You may now close this window.</div>
+    <!-- </div> -->
+</body>
+
+<script>
+    try {
+        const decoded = atob(getParam('b64'))
+        console.log(decoded)
+        document.getElementById('TITLE').innerHTML = decoded
+
+        new ClipboardJS('body', { // function for copy-to-click
+            text: function(trigger) {
+                console.log('copied')
+                document.getElementById('one').innerHTML = "Copied "
+                setTimeout(()=>{
+                    document.getElementById('done').style = "visibility: visible;"
+                },500)
+
+                return decoded
+            }
+        })
+        
+    } catch (error) {
+        document.getElementById('one').remove()
+        document.getElementById('two').remove()
+    }
+
+    function getParam(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) 
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam) 
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+</script>
