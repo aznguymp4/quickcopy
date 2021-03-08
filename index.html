@@ -7,7 +7,7 @@
         font-family: Helvetica;
     }
     #TITLE {
-        color: rgb(96, 201, 250);
+        color: rgb(96, 206, 250);
         font-family: Helvetica;
         font-weight: bolder;
     }
@@ -23,10 +23,11 @@
     }
 </style>
 
-<body style="background-color: rgb(35, 39, 42);">
+<body style="background-color: rgb(57, 62, 66);">
     <!-- <div class="child"> -->
         <div class="surround" id="one">Click anywhere to copy </div>
         <div id="TITLE">Get started by adding a Base64 encoded parameter to the URL!</div>
+        <img id="example" src="example.jpg">
         <div class="surround" id="two"> to the clipboard!</div>
         <br>
         <div class="surround" id="done" style="visibility: hidden;">You may now close this window.</div>
@@ -38,6 +39,7 @@
         const decoded = atob(getParam('b64'))
         console.log(decoded)
         document.getElementById('TITLE').innerHTML = decoded
+        document.getElementById('example').remove()
 
         new ClipboardJS('body', { // function for copy-to-click
             text: function(trigger) {
@@ -52,6 +54,8 @@
         })
         
     } catch (error) {
+        document.getElementById('TITLE').style = "color: rgb(175, 140, 255);"
+        document.getElementById('TITLE').innerHTML += "<br><br><br><br>"
         document.getElementById('one').remove()
         document.getElementById('two').remove()
     }
