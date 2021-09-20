@@ -1,3 +1,4 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script src="../module/clipboard.js"></script>
 
@@ -23,11 +24,11 @@
     }
 </style>
 
-<body style="background-color: rgb(57, 62, 66);">
+<body style="background-color: rgb(49, 51, 53);">
     <!-- <div class="child"> -->
         <div class="surround" id="one">Click anywhere to copy </div>
         <div id="TITLE">Get started by adding a Base64 encoded parameter to the URL!</div>
-        <img id="example" src="example.jpg">
+        <img id="example" src="example.jpg" width="360" style="box-shadow: 3px 3px #222;">
         <div class="surround" id="two"> to the clipboard!</div>
         <br>
         <div class="surround" id="done" style="visibility: hidden;">You may now close this window.</div>
@@ -36,7 +37,10 @@
 
 <script>
     try {
-        const decoded = atob(getParam('b64'))
+        //const decoded = atob(getParam('b64'))
+        var {Buffer} = require('buffer')
+        const decoded = Buffer.from(getParam('b64'), 'base64').toString()
+        console.log(getParam('b64'))
         console.log(decoded)
         document.getElementById('TITLE').innerHTML = decoded
         document.getElementById('example').remove()
@@ -54,6 +58,7 @@
         })
         
     } catch (error) {
+        console.log(error)
         document.getElementById('TITLE').style = "color: rgb(175, 140, 255);"
         document.getElementById('TITLE').innerHTML += "<br><br><br><br>"
         document.getElementById('one').remove()
